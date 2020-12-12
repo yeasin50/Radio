@@ -24,7 +24,8 @@ class NowPlaying extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(7),
       child: ListTile(
-        leading: Icon(Icons.radio),
+        // leading: Icon(Icons.radio),
+        leading: Image.network("https://www.101languages.net/images/radio/radio15.png",width: 40,),
         title: Text(
           title,
           style: TextStyle(fontWeight: FontWeight.bold),

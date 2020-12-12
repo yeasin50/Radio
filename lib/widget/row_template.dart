@@ -24,7 +24,8 @@ class _RowTemplateState extends State<RowTemplate> {
         style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey),
       ),
       // leading: _image(widget.radio.radioIMG, size: 40.4),
-      leading: Icon(Icons.dangerous),
+      // leading: Icon(Icons.dangerous),
+      leading: Image.network("https://www.101languages.net/images/radio/radio15.png"),
       subtitle: Text(
         widget.radio.radioDescription,
         maxLines: 2,
