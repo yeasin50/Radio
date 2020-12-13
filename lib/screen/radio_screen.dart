@@ -16,7 +16,7 @@ class _RadioScreenState extends State<RadioScreen> {
     radioName: "Radio 1",
     radioDescription: "Description here ",
     radioIMG:
-        "https://d3n8a8pro7vhmx.cloudfront.net/cjfe/pages/1180/attachments/original/1460475737/radio.jpg",
+        "https://www.101languages.net/images/radio/radio15.png",
     isFavorite: false,
   );
   @override
@@ -51,7 +51,7 @@ class _RadioScreenState extends State<RadioScreen> {
                 radioName: "Radio $index",
                 radioDescription: "Description here ",
                 radioIMG:
-                    "https://d3n8a8pro7vhmx.cloudfront.net/cjfe/pages/1180/attachments/original/1460475737/radio.jpg",
+                    "https://www.101languages.net/images/radio/radio15.png",
                 isFavorite: false,
               ),
             );
