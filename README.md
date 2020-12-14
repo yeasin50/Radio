@@ -2,7 +2,6 @@
 
 A new Flutter project.
 
-## need to merge? 
 ## Getting Started
 
 
