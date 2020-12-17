@@ -3,6 +3,16 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
 abstract class DB {
+  static String keyID = "id";
+  static String keyRadioName = "radioName";
+  static String keyRadioUrl = "radioUrl";
+  static String keyRadioDesc = 'radioDescription';
+  static String keyRadioWebsite = 'radioWebsite';
+  static String keyRadioImg = 'radioImage';
+  static String keyIsFav = 'isFavorite';
+  static String table = "radios";
+  static String table_fav = 'favoriteChannel';
+
   static Database _db;
 
   static int get _version => 1;
@@ -23,9 +33,9 @@ abstract class DB {
 
   static void onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE radios (id INTEGER PRIMARY KEY NOT NULL, radioName STRING, radioURL STRING, radioDesc STRING, radioWebsite STRING, radioPic String)');
+        'CREATE TABLE $table ($keyID INTEGER PRIMARY KEY NOT NULL, $keyRadioName STRING, $keyRadioUrl STRING, $keyRadioDesc STRING, $keyRadioWebsite STRING, $keyRadioImg String)');
     await db.execute(
-        'CREATE TABLE radios_bookmarks (id INTEGER PRIMARY KEY NOT NULL, isFavourite INTEGER)');
+        'CREATE TABLE $table_fav ($keyID INTEGER PRIMARY KEY NOT NULL, $keyIsFav INTEGER)');
   }
 
   static Future<List<Map<String, dynamic>>> query(String table) async =>

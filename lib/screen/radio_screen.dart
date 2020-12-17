@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:radio/model/radio.dart';
+import 'package:radio/services/db_download.dart';
 import 'package:radio/widget/now_playing_.dart';
 import 'package:radio/widget/row_template.dart';
 
@@ -15,8 +16,7 @@ class _RadioScreenState extends State<RadioScreen> {
     id: 1,
     radioName: "Radio 1",
     radioDescription: "Description here ",
-    radioIMG:
-        "https://www.101languages.net/images/radio/radio15.png",
+    radioIMG: "https://www.101languages.net/images/radio/radio15.png",
     isFavorite: false,
   );
   @override
@@ -25,6 +25,7 @@ class _RadioScreenState extends State<RadioScreen> {
       child: Column(
         children: [
           appBar(),
+          _radioList(),
           buildRowTemplates(),
           NowPlaying(title: "rara", imgUrl: "23"),
         ],
@@ -36,6 +37,31 @@ class _RadioScreenState extends State<RadioScreen> {
     return AppBar(
       title: Text("Radio"),
     );
+  }
+
+  Widget _radioList() {
+    return FutureBuilder(
+        future: DBDownloadService.fetchLocalDB(),
+        builder: (BuildContext ctx, AsyncSnapshot<List<RadioModel>> radios) {
+          if (radios.hasData) {
+            return Expanded(
+                child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: ListView(
+                children: <Widget>[
+                  ListView.separated(
+                      itemBuilder: (_, index) {
+                        return RowTemplate(radio: radios.data[index]);
+                      },
+                      separatorBuilder: (_, __) {
+                        return Divider();
+                      },
+                      itemCount: radios.data.length),
+                ],
+              ),
+            ));
+          }
+        });
   }
 
   Widget buildRowTemplates() {

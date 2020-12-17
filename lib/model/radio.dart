@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:radio/model/base_model.dart';
 import 'package:radio/model/bd_model.dart';
+import 'package:radio/utils/db_service.dart';
 
 class RadioAPIModel extends BaseModel {
   List<RadioModel> data;
@@ -17,6 +18,8 @@ class RadioAPIModel extends BaseModel {
 }
 
 class RadioModel extends DBBaseModel {
+  
+
   final int id;
   final String radioName;
   final String radioURL;
@@ -37,40 +40,40 @@ class RadioModel extends DBBaseModel {
 //mapping with json
   factory RadioModel.fromJson(Map<String, dynamic> map) {
     return RadioModel(
-        id: map["Id"],
+        id: map[DB.keyID],
         isFavorite: false,
-        radioDescription: map["RadioDescription"],
-        radioIMG: map["RadioImg"],
-        radioName: map["RadioName"],
-        radioURL: map["RadioUrl"],
-        radioWebSite: map["RadioWebsite"]);
+        radioDescription: map[DB.keyRadioDesc],
+        radioIMG: map[DB.keyRadioName],
+        radioName: map[DB.keyRadioName],
+        radioURL: map[DB.keyRadioUrl],
+        radioWebSite: map[DB.keyRadioWebsite]);
   }
 
 
   //for sqlFlite
    static RadioModel fromMap(Map<String, dynamic> map) {
     return RadioModel(
-      id: map["id"],
-      radioName: map['radioName'],
-      radioURL: map['radioURL'],
-      radioDescription: map['radioDesc'],
-      radioWebSite: map['radioWebsite'],
-      radioIMG: map['radioPic'],
-      isFavorite: map['isFavourite'] == 1 ? true : false,
+      id: map[DB.keyID],
+      radioName: map[DB.keyRadioName],
+      radioURL: map[DB.keyRadioUrl],
+      radioDescription: map[DB.keyRadioDesc],
+      radioWebSite: map[DB.keyRadioWebsite],
+      radioIMG: map[DB.keyRadioWebsite],
+      isFavorite: map[DB.keyIsFav] == 1 ? true : false,
     );
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
-      'radioName': radioName,
-      'radioURL': radioURL,
-      'radioDesc': radioDescription,
-      'radioWebsite': radioWebSite,
-      'radioPic': radioIMG
+      DB.keyRadioName: radioName,
+      DB.keyRadioUrl: radioURL,
+      DB.keyRadioDesc: radioDescription,
+      DB.keyRadioWebsite: radioWebSite,
+      DB.keyRadioName: radioIMG
     };
 
     if (id != null) {
-      map['id'] = id;
+      map[DB.keyID] = id;
     }
     return map;
   }

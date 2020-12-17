@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:radio/model/base_model.dart';
 
 class WebService {
-  Future<BaseModel> getData(String url, BaseModel baseModel) async {
+  Future<BaseModel> getData(String url,
+   BaseModel baseModel) async {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
