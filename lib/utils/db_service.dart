@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:radio/model/bd_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
@@ -18,6 +20,7 @@ abstract class DB {
   static int get _version => 1;
 
   static Future<void> init() async {
+    log("DB init()");
     if (_db != null) {
       return;
     }
@@ -36,6 +39,7 @@ abstract class DB {
         'CREATE TABLE $table ($keyID INTEGER PRIMARY KEY NOT NULL, $keyRadioName STRING, $keyRadioUrl STRING, $keyRadioDesc STRING, $keyRadioWebsite STRING, $keyRadioImg String)');
     await db.execute(
         'CREATE TABLE $table_fav ($keyID INTEGER PRIMARY KEY NOT NULL, $keyIsFav INTEGER)');
+    log("DB created");
   }
 
   static Future<List<Map<String, dynamic>>> query(String table) async =>

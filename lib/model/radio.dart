@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:radio/model/base_model.dart';
 import 'package:radio/model/bd_model.dart';
@@ -18,8 +19,6 @@ class RadioAPIModel extends BaseModel {
 }
 
 class RadioModel extends DBBaseModel {
-  
-
   final int id;
   final String radioName;
   final String radioURL;
@@ -39,6 +38,7 @@ class RadioModel extends DBBaseModel {
 
 //mapping with json
   factory RadioModel.fromJson(Map<String, dynamic> map) {
+    log("from Json factory on RadioModel");
     return RadioModel(
         id: map[DB.keyID],
         isFavorite: false,
@@ -49,9 +49,9 @@ class RadioModel extends DBBaseModel {
         radioWebSite: map[DB.keyRadioWebsite]);
   }
 
-
   //for sqlFlite
-   static RadioModel fromMap(Map<String, dynamic> map) {
+  static RadioModel fromMap(Map<String, dynamic> map) {
+    log("from Map on RadioModel");
     return RadioModel(
       id: map[DB.keyID],
       radioName: map[DB.keyRadioName],
@@ -64,6 +64,7 @@ class RadioModel extends DBBaseModel {
   }
 
   Map<String, dynamic> toMap() {
+    log("To Map on RadioModel");
     Map<String, dynamic> map = {
       DB.keyRadioName: radioName,
       DB.keyRadioUrl: radioURL,

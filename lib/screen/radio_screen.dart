@@ -25,9 +25,11 @@ class _RadioScreenState extends State<RadioScreen> {
       child: Column(
         children: [
           appBar(),
-          _radioList(),
+          // _radioDataTester(),
+          // _radioList(),
+
           buildRowTemplates(),
-          NowPlaying(title: "rara", imgUrl: "23"),
+          // NowPlaying(title: "rara", imgUrl: "23"),
         ],
       ),
     );
@@ -39,30 +41,60 @@ class _RadioScreenState extends State<RadioScreen> {
     );
   }
 
-  Widget _radioList() {
+  Widget _radioDataTester() {
     return FutureBuilder(
-        future: DBDownloadService.fetchLocalDB(),
-        builder: (BuildContext ctx, AsyncSnapshot<List<RadioModel>> radios) {
-          if (radios.hasData) {
-            return Expanded(
-                child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5),
-              child: ListView(
-                children: <Widget>[
-                  ListView.separated(
-                      itemBuilder: (_, index) {
-                        return RowTemplate(radio: radios.data[index]);
-                      },
-                      separatorBuilder: (_, __) {
-                        return Divider();
-                      },
-                      itemCount: radios.data.length),
-                ],
-              ),
-            ));
-          }
-        });
+      future: DBDownloadService.fetchAllRadios(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return Text("Error while getting Data");
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return CircularProgressIndicator();
+
+        if (snapshot.data.data.length > 0)
+          // return Text("A ${snapshot.data.data.length}");
+          Expanded(
+            child: ListView(
+              children: [
+                ListView.separated(
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                          index.toString(),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (_, __) => Divider(),
+                    itemCount: snapshot.data.data.length),
+              ],
+            ),
+          );
+      },
+    );
   }
+
+  // Widget _radioList() {
+  //   return FutureBuilder(
+  //       future: DBDownloadService.fetchLocalDB(),
+  //       builder: (ctx, radios) {
+  //         if (radios.hasData) {
+  //           return  Expanded(
+  //               child: Padding(
+  //             padding: EdgeInsets.symmetric(vertical: 5),
+  //             child: ListView(
+  //               children: <Widget>[
+  //                 ListView.separated(
+  //                     itemBuilder: (_, index) {
+  //                       return RowTemplate(radio: radios.data[index]);
+  //                     },
+  //                     separatorBuilder: (_, __) {
+  //                       return Divider();
+  //                     },
+  //                     itemCount: radios.data.length),
+  //               ],
+  //             ),
+  //           ));
+  //         }
+  //       });
+  // }
 
   Widget buildRowTemplates() {
     return Expanded(

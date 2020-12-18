@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:radio/model/radio.dart';
 import 'package:radio/utils/db_service.dart';
 import 'package:radio/utils/web_service.dart';
@@ -11,8 +13,8 @@ class DBDownloadService {
 
   static Future<RadioAPIModel> fetchAllRadios() async {
     // retriving list of radio json
-    final serviceResponse =
-        await WebService().getData("http://snippetcoder.com/AllRadios.txt", new RadioAPIModel());
+    final serviceResponse = await WebService()
+        .getData("http://snippetcoder.com/AllRadios.txt", new RadioAPIModel());
     return serviceResponse;
   }
 
@@ -20,6 +22,7 @@ class DBDownloadService {
     String searchQuery = "",
     bool isFavouriteOnly = false,
   }) async {
+    log("fetchLocalDB");
     if (!await isLocalDBAvailable()) {
       // HTTP Call to fetch JSON Data
       RadioAPIModel radioAPIModel = await fetchAllRadios();
@@ -35,13 +38,13 @@ class DBDownloadService {
         });
       }
     }
-    
+
     String rawQuery = "";
 
     if (!isFavouriteOnly) {
       rawQuery =
           "SELECT radios.id, radioName, radioURL, radioURL, radioDesc, radioWebsite, radioPic,"
-          "isFavourite FROM radios LEFT JOIN radios_bookmarks ON radios_bookmarks.id = radios.id ";
+          "isFavourite FROM radios LEFT JOIN ${DB.table_fav} ON ${DB.table_fav}.id = radios.id ";
 
       if (searchQuery.trim() != "") {
         rawQuery = rawQuery +
@@ -50,7 +53,7 @@ class DBDownloadService {
     } else {
       rawQuery =
           "SELECT radios.id, radioName, radioURL, radioURL, radioDesc, radioWebsite, radioPic,"
-          "isFavourite FROM radios INNER JOIN radios_bookmarks ON radios_bookmarks.id = radios.id "
+          "isFavourite FROM radios INNER JOIN ${DB.table_fav} ON ${DB.table_fav}.id = radios.id "
           "WHERE isFavourite = 1 ";
 
       if (searchQuery.trim() != "") {
