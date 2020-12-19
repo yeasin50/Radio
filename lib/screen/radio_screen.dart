@@ -25,10 +25,11 @@ class _RadioScreenState extends State<RadioScreen> {
       child: Column(
         children: [
           appBar(),
-          // _radioDataTester(),
+          //FIXME::
+          _radiosList(),
           // _radioList(),
 
-          buildRowTemplates(),
+          // buildRowTemplates(),
           // NowPlaying(title: "rara", imgUrl: "23"),
         ],
       ),
@@ -41,32 +42,14 @@ class _RadioScreenState extends State<RadioScreen> {
     );
   }
 
-  Widget _radioDataTester() {
-    return FutureBuilder(
-      future: DBDownloadService.fetchAllRadios(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) return Text("Error while getting Data");
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return CircularProgressIndicator();
-
-        if (snapshot.data.data.length > 0)
-          // return Text("A ${snapshot.data.data.length}");
-          Expanded(
-            child: ListView(
-              children: [
-                ListView.separated(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          index.toString(),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (_, __) => Divider(),
-                    itemCount: snapshot.data.data.length),
-              ],
-            ),
-          );
+  Widget _radiosList() {
+    return new FutureBuilder(
+      future: DBDownloadService.fetchLocalDB(),
+      builder: (BuildContext context, AsyncSnapshot<List<RadioModel>> radios) {
+        if (radios.hasData) {
+          return Text("has data");
+        }
+        return CircularProgressIndicator();
       },
     );
   }

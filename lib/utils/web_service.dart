@@ -10,6 +10,7 @@ class WebService {
 
     if (response.statusCode == 200) {
       baseModel.fromJson(json.decode(response.body));
+      log(baseModel.toString());
       return baseModel;
     } else {
       throw Exception('Failed to load data!');

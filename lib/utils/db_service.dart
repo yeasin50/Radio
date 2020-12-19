@@ -22,6 +22,7 @@ abstract class DB {
   static Future<void> init() async {
     log("DB init()");
     if (_db != null) {
+      log("DB not null");
       return;
     }
 
@@ -37,8 +38,8 @@ abstract class DB {
   static void onCreate(Database db, int version) async {
     await db.execute(
         'CREATE TABLE $table ($keyID INTEGER PRIMARY KEY NOT NULL, $keyRadioName STRING, $keyRadioUrl STRING, $keyRadioDesc STRING, $keyRadioWebsite STRING, $keyRadioImg String)');
-    await db.execute(
-        'CREATE TABLE $table_fav ($keyID INTEGER PRIMARY KEY NOT NULL, $keyIsFav INTEGER)');
+    // await db.execute(
+    //     'CREATE TABLE $table_fav ($keyID INTEGER PRIMARY KEY NOT NULL, $keyIsFav INTEGER)');
     log("DB created");
   }
 
