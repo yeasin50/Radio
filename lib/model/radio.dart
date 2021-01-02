@@ -65,7 +65,7 @@ class RadioModel extends DBBaseModel {
 
   Map<String, dynamic> toMap() {
     log("To Map on RadioModel");
-    Map<String, dynamic> map = {
+    var map = <String, dynamic>{
       DB.keyRadioName: radioName,
       DB.keyRadioUrl: radioURL,
       DB.keyRadioDesc: radioDescription,

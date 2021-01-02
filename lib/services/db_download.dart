@@ -7,15 +7,15 @@ import 'package:radio/utils/web_service.dart';
 class DBDownloadService {
   static Future<bool> isLocalDBAvailable() async {
     await DB.init();
-    List<Map<String, dynamic>> _results = await DB.query(DB.table);
-    return _results.length == 0 ? false : true;
+    // List<Map<String, dynamic>> _results = await DB.query(DB.table);
+    // return _results.length == 0 ? false : true;
   }
 
   static Future<RadioAPIModel> fetchAllRadios() async {
     // retriving list of radio json
     final serviceResponse = await WebService()
         .getData("http://snippetcoder.com/AllRadios.txt", new RadioAPIModel());
-    log(serviceResponse.toString());
+    log(">> "+serviceResponse.toString());
     return serviceResponse;
   }
 
@@ -35,7 +35,7 @@ class DBDownloadService {
         log("has data");
         //ForEach api Data and Save in Local DB
         radioAPIModel.data.forEach((RadioModel radioModel) {
-          DB.insert(DB.table, radioModel);
+          // DB.insert(DB.table, radioModel);
         });
       }
     }
@@ -64,13 +64,13 @@ class DBDownloadService {
     //     }
     // }
 
-    List<Map<String, dynamic>> _results = await DB.rawQuery(rawQuery);
+    // List<Map<String, dynamic>> _results = await DB.rawQuery(rawQuery);
     //
 
-    print("On result " + _results.toString());
+    // print("On result " + _results.toString());
 
     List<RadioModel> radioModel = new List<RadioModel>();
-    radioModel = _results.map((item) => RadioModel.fromMap(item)).toList();
+    // radioModel = _results.map((item) => RadioModel.fromMap(item)).toList();
 
     return radioModel;
   }

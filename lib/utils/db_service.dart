@@ -1,16 +1,17 @@
 import 'dart:developer';
 
 import 'package:radio/model/bd_model.dart';
+import 'package:radio/model/radio.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as p;
 
 abstract class DB {
-  static String keyID = "id";
-  static String keyRadioName = "radioName";
-  static String keyRadioUrl = "radioUrl";
-  static String keyRadioDesc = 'radioDescription';
-  static String keyRadioWebsite = 'radioWebsite';
-  static String keyRadioImg = 'radioImage';
+  static String keyID = "ID";
+  static String keyRadioName = "RadioName";
+  static String keyRadioUrl = "RadioURL";
+  static String keyRadioDesc = 'RadioDesc';
+  static String keyRadioWebsite = 'RadioWebsite';
+  static String keyRadioImg = 'RadioPic';
   static String keyIsFav = 'isFavorite';
   static String table = "radios";
   static String table_fav = 'favoriteChannel';
@@ -43,14 +44,8 @@ abstract class DB {
     log("DB created");
   }
 
-  static Future<List<Map<String, dynamic>>> query(String table) async =>
-      _db.query(table);
-
-  static Future<int> insert(String table, DBBaseModel model) async =>
-      await _db.insert(table, model.toMap());
-
-  static Future<List<Map<String, dynamic>>> rawQuery(String sql) async =>
-      _db.rawQuery(sql);
-
-  static Future<int> rawInsert(String sql) async => await _db.rawInsert(sql);
+  static Future<int> insertRadio(RadioModel model) async {
+    var resutl = await _db.insert(table, model.toMap());
+    return resutl;
+  }
 }

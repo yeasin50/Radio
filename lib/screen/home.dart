@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:radio/screen/radio_screen.dart';
 
+import '../testWidget.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -15,7 +17,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         primary: false,
-        body: _children[_currentIndex],
+        // body: _children[_currentIndex],
+        //TODO:: to test data
+        body: TestWidget(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           items: [
